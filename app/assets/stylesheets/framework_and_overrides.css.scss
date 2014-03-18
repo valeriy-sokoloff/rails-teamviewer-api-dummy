@@ -1,3 +1,8 @@
 // import the CSS framework
 @import "bootstrap";
-@import "bootstrap-responsive";
+
+$navbarHeight: 34px;
+body {
+  padding-top: 40px;
+  min-width: 981px;
+}
