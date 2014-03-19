@@ -17,7 +17,7 @@ class TeamviewerClient
   #------------#
 
   def ping
-    get 'api/v1/ping'
+    get 'ping'
   end
 
 
@@ -26,19 +26,19 @@ class TeamviewerClient
   #-------------#
 
   def users(params = nil)
-    get 'api/v1/users', params
+    get 'users', params
   end
 
   def user_add(data)
-    post 'api/v1/users', data
+    post 'users', data
   end
 
   def user_get(id)
-    get "api/v1/users/#{id}"
+    get "users/#{id}"
   end
 
   def user_update(id, data)
-    put "api/v1/users/#{id}", data
+    put "users/#{id}", data
   end
 
 
@@ -47,19 +47,19 @@ class TeamviewerClient
   #----------------#
 
   def sessions(params = nil)
-    get 'api/v1/sessions', params
+    get 'sessions', params
   end
 
   def session_add(data)
-    post 'api/v1/sessions', data
+    post 'sessions', data
   end
 
   def session_get(code)
-    get "api/v1/sessions/#{code}"
+    get "sessions/#{code}"
   end
 
   def session_update(code)
-    put "api/v1/sessions/#{code}", data
+    put "sessions/#{code}", data
   end
 
 
@@ -68,15 +68,15 @@ class TeamviewerClient
   #--------------------------#
 
   def reports(params = nil)
-    get 'api/v1/reports/connections', params
+    get 'reports/connections', params
   end
 
   def report_update(id, data)
-    put "api/v1/reports/connections/#{id}", data
+    put "reports/connections/#{id}", data
   end
 
   def report_delete(id)
-    delete "api/v1/reports/connections/#{id}"
+    delete "reports/connections/#{id}"
   end
 
 
@@ -85,52 +85,56 @@ class TeamviewerClient
   #----------------#
 
   def meetings(params = nil)
-    get 'api/v1/meetings', params
+    get 'meetings', params
   end
 
   def meeting_get(id)
-    get "api/v1/meetings/#{id}"
+    get "meetings/#{id}"
   end
 
   def meeting_invitation(id, params)
-    get "api/v1/meetings/#{id}/invitation", params
+    get "meetings/#{id}/invitation", params
   end
 
-  def meeting_new(data)
-    post 'api/v1/meetings', data
+  def meeting_add(data)
+    post 'meetings', data
   end
 
   def meeting_update(id, data)
-    put "api/v1/meetings/#{id}", data
+    put "meetings/#{id}", data
   end
 
   def meeting_delete(id)
-    delete "api/v1/meetings/#{id}"
+    delete "meetings/#{id}"
   end
 
 
+  private
+  
+    def full_path(resource)
+      "api/v1/#{resource}"
+    end
 
-  #private
-
-  def get(resource, params = nil)
-    response = @access_token.get(resource, :params => params)
-    response.parsed
-  end
-
-  def post(resource, data)
-    response = @access_token.post( resource, JSON.generate(data) )
-    response.status == 200 ? response.parsed : response.status
-  end
-
-  def put(resource, data)
-    response = @access_token.put( resource, JSON.generate(data) )
-    response.status
-  end
-
-  def delete(resource)
-    @access_token.delete( resource )
-  end
-
+    def get(resource, params = nil)
+      response = @access_token.get( full_path(resource), :params => params )
+      response.parsed
+    end
+  
+    def post(resource, data)
+      response = @access_token.post( full_path(resource), JSON.generate(data) )
+      response.status == 200 ? response.parsed : response.status
+    end
+  
+    def put(resource, data)
+      response = @access_token.put( full_path(resource), JSON.generate(data) )
+      response.status
+    end
+  
+    def delete(resource)
+      response = @access_token.delete( full_path(resource) )
+      response.status
+    end
 
 
-  end
+
+end
