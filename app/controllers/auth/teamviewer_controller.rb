@@ -1,7 +1,7 @@
 class Auth::TeamviewerController < ApplicationController
 
-  include TeamViewerConnector
-  include TeamviewerClient
+  require 'teamviewer_connector'
+  require 'teamviewer_client'
 
   def index
   end
@@ -17,6 +17,15 @@ class Auth::TeamviewerController < ApplicationController
     )
     session[:access_token] = @access_token.token
     session[:expires_at] = @access_token.expires_at
+
+    redirect_to auth_teamviewer_path
+  end
+
+  def test_ping
+    teamviewer = TeamviewerClient.new(client, session[:access_token])
+    res = teamviewer.ping
+
+    render json: res.inspect.to_json
   end
 
   private
