@@ -15,12 +15,21 @@ class Auth::TeamviewerController < ApplicationController
         params[:code],
         :redirect_uri => auth_teamviewer_callback_url
     )
+
+    #
+    # Here we need to save token with needed info somewhere,
+    # and check when it expires.
+    #
     session[:access_token] = @access_token.token
     session[:expires_at] = @access_token.expires_at
 
     redirect_to auth_teamviewer_path
   end
 
+
+  #
+  # Just using a simple Teamviewer's internal API method for testing - 'ping'
+  #
   def test_ping
     teamviewer = TeamviewerClient.new(client, session[:access_token])
     res = teamviewer.ping
