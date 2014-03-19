@@ -1,7 +1,6 @@
 class Auth::TeamviewerController < ApplicationController
 
-  require 'teamviewer_connector'
-  require 'teamviewer_client'
+  require 'teamviewer'
 
   def index
   end
@@ -31,7 +30,7 @@ class Auth::TeamviewerController < ApplicationController
   # Just using a simple Teamviewer's internal API method for testing - 'ping'
   #
   def test_ping
-    teamviewer = TeamviewerClient.new(client, session[:access_token])
+    teamviewer = Teamviewer::Client.new(client, session[:access_token])
     res = teamviewer.ping
 
     render json: res.inspect.to_json
@@ -40,7 +39,7 @@ class Auth::TeamviewerController < ApplicationController
   private
 
   def client
-    conn = TeamviewerConnector.new
+    conn = Teamviewer::Connector.new
     conn.client
   end
 end
