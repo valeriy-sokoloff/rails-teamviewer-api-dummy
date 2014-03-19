@@ -121,12 +121,12 @@ class TeamviewerClient
     end
   
     def post(resource, data)
-      response = @access_token.post( full_path(resource), JSON.generate(data) )
+      response = @access_token.post( full_path(resource), { body: data } )
       response.status == 200 ? response.parsed : response.status
     end
   
     def put(resource, data)
-      response = @access_token.put( full_path(resource), JSON.generate(data) )
+      response = @access_token.put( full_path(resource), { body: data } )
       response.status
     end
   
