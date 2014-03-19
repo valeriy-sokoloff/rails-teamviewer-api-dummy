@@ -1,2 +1,15 @@
 %h1 Auth::Teamviewer#index
 %p Find me in app/views/auth/teamviewer/index.html.haml
+
+%hr
+
+%p= link_to 'Get access!', auth_teamviewer_auth_path, :class => 'btn btn-success'
+
+-if session[:access_token].present?
+  %p Access token: #{session[:access_token]}
+  %p Expires at: #{DateTime.strptime(session[:expires_at].to_s, '%s')}
+  %p
+    =link_to 'Test Ping!', '#', :class=>'btn', :id=>'test_ping_btn'
+
+  %p#result
+
