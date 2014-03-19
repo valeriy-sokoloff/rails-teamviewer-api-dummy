@@ -15,6 +15,8 @@ class Auth::TeamviewerController < ApplicationController
         params[:code],
         :redirect_uri => auth_teamviewer_callback_url
     )
+    session[:access_token] = @access_token.token
+    session[:expires_at] = @access_token.expires_at
   end
 
   private
