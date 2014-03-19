@@ -4,7 +4,6 @@ RailsTeamviewerApiDummy::Application.routes.draw do
     get '/teamviewer' => 'teamviewer#index'
     get '/teamviewer/auth'
     get '/teamviewer/callback'
-
   end
 
   root :to => 'home#index'
