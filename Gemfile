@@ -12,6 +12,9 @@ gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'haml-rails'
 gem 'therubyracer', :platform=>:ruby
 gem 'thin'
+
+gem 'oauth2'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
