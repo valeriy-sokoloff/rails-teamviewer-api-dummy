@@ -21,6 +21,7 @@ class Auth::TeamviewerController < ApplicationController
     #
     session[:access_token] = @access_token.token
     session[:expires_at] = @access_token.expires_at
+    session[:refresh_token] = @access_token.refresh_token
 
     redirect_to auth_teamviewer_path
   end
