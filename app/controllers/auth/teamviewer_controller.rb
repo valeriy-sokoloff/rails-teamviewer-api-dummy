@@ -16,12 +16,9 @@ class Auth::TeamviewerController < ApplicationController
     )
 
     #
-    # Here we need to save token with needed info somewhere,
-    # and check when it expires.
+    # Here we need to save somewhere oauth token object
     #
-    session[:access_token] = @access_token.token
-    session[:expires_at] = @access_token.expires_at
-    session[:refresh_token] = @access_token.refresh_token
+    session[:oauth_token] = @access_token.to_hash
 
     redirect_to auth_teamviewer_path
   end

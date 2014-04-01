@@ -32,13 +32,17 @@ module Teamviewer
 
     attr_reader :access_token
 
-    def initialize(client, access_token_str, refresh_token_str)
+    def initialize(client, oauth_token_hash)
       @client = client
-      @access_token = token(access_token_str, refresh_token_str)
+      @access_token = token(oauth_token_hash)
     end
 
     def refresh!
       @client.refresh!
+    end
+
+    def expired?
+      @access_token.expired?
     end
 
 
@@ -141,8 +145,8 @@ module Teamviewer
 
     private
 
-    def token(access_token, refresh_token)
-      OAuth2::AccessToken.new(@client, access_token, :refresh_token => refresh_token)
+    def token(hash)
+      OAuth2::AccessToken.from_hash(@client, hash)
     end
 
     def full_path(resource)
