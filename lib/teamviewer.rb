@@ -38,7 +38,7 @@ module Teamviewer
     end
 
     def refresh!
-      @client.refresh!
+      @access_token = @access_token.refresh!
     end
 
     def expired?
